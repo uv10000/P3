@@ -1,6 +1,6 @@
 # **Traffic Sign Recognition** 
 
-## Writeup
+## Writeup Ulrich Voll
 
 
 **Build a Traffic Sign Recognition Project**
@@ -20,7 +20,7 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 [//]: # (Image References)
 
 [image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
+[image2]: ./gray_vs_colour.png "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
@@ -31,11 +31,11 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 ### Executive Summary
 
 
-As a starting point, I used my leNet implementation as from the lecture/quizz, as suggested. 
+As a starting point, I used my leNet implementation from the lecture/quizz, as suggested. 
 
 It did not work out of the box, and I observed severe overfitting. Symptoms: Near 100% accuracy on the training set but far less (~ 60%, initially) on the validation set. 
 
-Two major improvements:
+I then came up with two major improvements:
 * Regularisation (both L_2 and dropout, details see below). Still overfitting but better (80% training accuracy). 
 * Conversion to greyscale. Surprisingly (to me), this massively improved the validation-set-accuracy beyond the limit of 93%. 
 
@@ -51,18 +51,18 @@ I worked in a local setup using my GTX 1070 under Ubuntu 16.04 employing the GPU
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the pandas library to calculate summary statistics of the traffic
+I used numpy/python to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799 (using .shape) 
+* The size of the validation set is 4410 (using .shape) 
+* The size of test set is 12630 (using .shape) 
+* The shape of a traffic sign image is (32, 32) (using .shape) 
+* The number of unique classes/labels in the data set is 43 (using np.max on the y-values)
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. It is a bar chart showing the (absolute) frequency of the data as a function  of label,  for all three sets that ist training, validation and test set.
 
 ![alt text][image1]
 
@@ -70,23 +70,16 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
+Initially, I merely normalized the image data according to your suggestion. The approximate formula (pixel - 128)/ 128 is indeed good enough. 
 
-Here is an example of a traffic sign image before and after grayscaling.
+Only later, after getting stuck in an overfitting situation with the colour-images,  I decided to convert the images to grayscale because Udacity suggested it. This turned out to help a lot, but I am not sure why, see discussion below. 
 
+Here is an example of a traffic sign image before and after my grayscaling, using "cv2.cvtColor" in a straightforward way.
 ![alt text][image2]
-using
-As a last step, I normalized the image data because ...
 
-I decided to generate additional data because ... 
 
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+I did not need to generate any additional data in order to acchieve (substantially) more than 93% accuracy on the training set. 
+So I did not try. Possibly I will come round to augmenting data at later stage, it would certainly be interesting how much of an effect this might have.  
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
