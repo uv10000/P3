@@ -30,9 +30,6 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 
 ### Executive Summary
 
-Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
-
-I worked in a local setup using my GTX 1070 employing the GPU Version of the carnd-term1 conda environment.
 
 As a starting point, I used my leNet implementation as from the lecture/quizz, as suggested. 
 
@@ -46,7 +43,11 @@ Two major improvements:
 
 After some tuning (details see below) I acchieved 96% accuracy on the validation set. 
 
-I did not have to use any form of data augmentation. 
+I did not have to use any form of data augmentation to get this relatively pleasing result. 
+
+Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
+
+I worked in a local setup using my GTX 1070 under Ubuntu 16.04 employing the GPU Version of the udacity carnd-term1 conda environment.
 
 ### Data Set Summary & Exploration
 
