@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 
 cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view) 
 
-Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
+
 
 [//]: # (Image References)
 
@@ -29,11 +29,16 @@ Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Tr
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
 ### Executive Summary
-I extended my leNet implementation as from the lecture/quizz, as suggested. 
+
+Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
+
+I worked in a local setup using my GTX 1070 employing the GPU Version of the carnd-term1 conda environment.
+
+As a starting point, I used my leNet implementation as from the lecture/quizz, as suggested. 
 
 It did not work out of the box, and I observed severe overfitting.
 
-Near 100% accuracy on tthe raining set but far less (~ 60%) on the validation set). 
+Near 100% accuracy on the training set but far less (~ 60%) on the validation set. 
 
 Two major improvements:
 * Regularisation (both L_2 and dropout, details see below). Still underfitting but better (80% training accuracy). 
@@ -71,7 +76,7 @@ As a first step, I decided to convert the images to grayscale because ...
 Here is an example of a traffic sign image before and after grayscaling.
 
 ![alt text][image2]
-
+using
 As a last step, I normalized the image data because ...
 
 I decided to generate additional data because ... 
