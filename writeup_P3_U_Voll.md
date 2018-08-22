@@ -2,9 +2,6 @@
 
 ## Writeup
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
 
 **Build a Traffic Sign Recognition Project**
 
@@ -16,6 +13,9 @@ The goals / steps of this project are the following:
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
+cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view) 
+
+Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
 
 [//]: # (Image References)
 
@@ -28,15 +28,20 @@ The goals / steps of this project are the following:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+### Executive Summary
+I extended my leNet implementation as from the lecture/quizz, as suggested. 
 
----
-### Writeup / README
+It did not work out of the box, and I observed severe overfitting.
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
+Near 100% accuracy on tthe raining set but far less (~ 60%) on the validation set). 
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+Two major improvements:
+* Regularisation (both L_2 and dropout, details see below). Still underfitting but better (80% training accuracy). 
+* converting to greyscale. Surprisingly this massively improved the validation-set-accuracy. 
+
+After some tuning (details see below) I acchieved 96% accuracy on the validation set. 
+
+I did not have to use any form of data augmentation. 
 
 ### Data Set Summary & Exploration
 
@@ -122,7 +127,7 @@ If a well known architecture was chosen:
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
  
 
-### Test a Model on New Images
+### Test a Model on New Images 
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
@@ -148,7 +153,7 @@ Here are the results of the prediction:
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Sugge stions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
