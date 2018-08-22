@@ -33,15 +33,13 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 
 As a starting point, I used my leNet implementation as from the lecture/quizz, as suggested. 
 
-It did not work out of the box, and I observed severe overfitting.
-
-Near 100% accuracy on the training set but far less (~ 60%) on the validation set. 
+It did not work out of the box, and I observed severe overfitting. Symptoms: Near 100% accuracy on the training set but far less (~ 60%, initially) on the validation set. 
 
 Two major improvements:
-* Regularisation (both L_2 and dropout, details see below). Still underfitting but better (80% training accuracy). 
-* converting to greyscale. Surprisingly this massively improved the validation-set-accuracy. 
+* Regularisation (both L_2 and dropout, details see below). Still overfitting but better (80% training accuracy). 
+* Conversion to greyscale. Surprisingly (to me), this massively improved the validation-set-accuracy beyond the limit of 93%. 
 
-After some tuning (details see below) I acchieved 96% accuracy on the validation set. 
+After some tuning (all details see below) I acchieved 96% accuracy on the validation set. 
 
 I did not have to use any form of data augmentation to get this relatively pleasing result. 
 
