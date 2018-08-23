@@ -22,11 +22,15 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 [image1]: ./data_statistics.png "Visualization"
 [image2]: ./gray_vs_colour.png "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image4]: ./verkehrszeichen/tempo30.jpg "Traffic Sign 1"
+[image5]: ./verkehrszeichen/rechts_vorbei.jpg "Traffic Sign 2"
+[image6]: ./verkehrszeichen/stop.jpg "Traffic Sign 3"
+[image7]: ./verkehrszeichen/tempo70.jpg "Traffic Sign 4"
+[image8]: ./verkehrszeichen/ueberholverbot.jpg"Traffic Sign 5"
+[image9]: ./verkehrszeichen/einfahrt_verboten.jpg "Traffic Sign 6"
+[image10]: ./verkehrszeichen/vorfahrt_achten.jpg "Traffic Sign 7"
+[image11]: ./verkehrszeichen/vorfahrtstrasse.jpg "Traffic Sign 8"
+[image12]: ./verkehrszeichen/3p5m.jpg"Traffic Sign 9
 
 ### Executive Summary
 
@@ -161,7 +165,8 @@ If a well known architecture was chosen:
 Here are nine German traffic signs that I found on the web, or photographed myself (since I live in Munich ...):
 
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][image7] ![alt text][image8] ![alt text][image9] 
+![alt text][image10] [alt text][image11] ![alt text][image12]
 
 The first image might be difficult to classify because ...
 
