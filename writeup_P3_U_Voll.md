@@ -76,7 +76,7 @@ signs data set:
 
 Here are three bar charts showing the (absolute) frequencies of the data as a function  of label,  for all three sets, ie training, validation and test set.
 
-![alt text][image1]
+![alt text][image1] 
 
 They are indeed distributed quite unevenly and data augmentation might be worth a try.  
 
