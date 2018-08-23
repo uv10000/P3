@@ -76,7 +76,6 @@ signs data set:
 
 Here are three bar charts showing the (absolute) frequencies of the data as a function  of label,  for all three sets, ie training, validation and test set.
 
-![alt text][image1] 
 <p align="center">
   <img width="300" src="./data_statistics.png">
 </p>
