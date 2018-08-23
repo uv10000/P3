@@ -39,9 +39,15 @@ I then came up with two major improvements:
 * Regularisation (both L_2 and dropout, details see below). Still overfitting but better (80% training accuracy). 
 * Conversion to greyscale. Surprisingly (to me), this massively improved the validation-set-accuracy beyond the limit of 93%. 
 
-After some tuning (all details see below) I acchieved 96% accuracy on the validation set. 
+After some tuning (all details see below) I acchieved 96% accuracy on the validation set.
+
+It also performs well on the test set (some 95%).
+
+However it badly fails on the real world test images of German traffic signs (55% accuracy on 9 images).
 
 I did not have to use any form of data augmentation to get this relatively pleasing result. 
+
+See detailed report and discussions below. 
 
 Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
 
@@ -115,7 +121,18 @@ My final model consisted of the following layers:
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+To train the model, I used
+* Adam Optimizer as in class, learing rate 0.002
+* cost function "cross entropy" as in class
+* L2 Normalisation, weight factor mylambda = 0.25
+* Dropout Normalisations in some layers (details see above) with keep_prob=50% dropout during training. 
+* 50 Epochs 
+* BATCH_SIZE = 256 
+* local Nvidia GTX 1070 under Ubuntu 16.04, udacity conda env for GPU
+* weights initialised with mean = 0.0 and sigma = 0.1, truncated normal, sizes see architecture overview above
+* biases initialised with 0.0s
+* RELU as non-linearity
+* learned parameters are stored to disk using the tl.saver mechanism  
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
@@ -141,7 +158,7 @@ If a well known architecture was chosen:
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+Here are nine German traffic signs that I found on the web, or photographed myself (since I live in Munich ...):
 
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
