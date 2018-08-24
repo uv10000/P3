@@ -37,7 +37,7 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 ### Executive Summary
 
 
-As a starting point, I used my leNet implementation from the lecture/quizz, as suggested. 
+As a starting If an iterative approach was chosen:point, I used my leNet implementation from the lecture/quizz, as suggested. 
 
 It did not work out of the box, and I observed severe overfitting. Symptoms: Near 100% accuracy on the training set but far less (~ 60%, initially) on the validation set. 
 
@@ -81,7 +81,7 @@ Here are three bar charts showing the (absolute) frequencies of the data as a fu
 </p>
 
 Classes are indeed distributed quite unevenly and data augmentation might be worth a try.  
-
+If an iterative approach was chosen:
 The distribution seems to be fairly similar for training validation and test set. 
 
 ### Design and Test a Model Architecture
@@ -107,7 +107,7 @@ So I did not try. Possibly I will come around to augmenting data at later stage,
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| TF variable name
+| Layer         		    |     Description	        					            | TF variable name
 |:---------------------:|:---------------------------------------------:| :------------------: |
 | Input         		    | 32x32x1 greyscale image   							      |                      |
 | Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	  |                      |
@@ -156,7 +156,7 @@ My final model results were:
 * How was the architecture adjusted and why was it adjusted? Introduced regularization, validation accuracy increased to some 80% (from some 60% previously). 
 *I used both L2-regularisation and dropout (details above). 
 * Main improvement: Changing to greyscale Images. Validation accuracy reached values around 96%. I do not have a theoretical justification, I tried it since it was suggested by udacity and it worked. 
-* Which parameters were tuned? I tuned both the learning rate and the weight for regularization. Dropout prob 50% worked find.  
+* Which parameters were tuned? I tuned both the learning rate and the weight for regularization. Dropout prob 50% worked fine.  
 * What are some of the important design choices and why were they chosen? The leNet architecture was a good choice, quite capable of describing the data without overfitting, provided proper regularisation is implemented.
 
 
@@ -189,7 +189,14 @@ Here are nine German traffic signs that I found on the web, or photographed myse
 </p>
 
 
-The first image might be difficult to classify because ...
+All images are nicely centred and cropped.
+
+The last image is a German traffic sign but not in the list (max height 3.5m).
+
+Here are the same images converted to 32x32 greyscale
+<p align="center">
+   <img width="200" src="./verkehrszeichen/greyscale_signs.png">
+</p>
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
