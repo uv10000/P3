@@ -47,7 +47,7 @@ I then came up with two major improvements:
 
 After some tuning (all details see below) I acchieved 96% accuracy on the validation set.
 
-It also performs well on the test set (some 95%).
+The solution found also performs well on the test set (some 95%).
 
 However it badly fails on the real world test images of German traffic signs (55% accuracy on 9 images).
 
@@ -151,10 +151,10 @@ My final model results were:
 * validation set accuracy of 96.3% 
 * test set accuracy of 94.7%
 
-If an iterative approach was chosen:
-* I tried the architecture from the leNet class/quizz (initially adapted to three colour channels, later returned to greyscale). 
-* Problems with the initial architecture: Severe Overfitting, that is very good training accuracy but poor validation accuracy
-* How was the architecture adjusted and why was it adjusted? Introduced regularization, validation acc increased to some 80% from som 60% previously. I used both L2-regularisation and dropout (details above). 
+* I started off with the architecture from the leNet class/quizz (initially adapted to three colour channels, later returned to greyscale). 
+* Problems with the initial architecture: Severe overfitting, that is: very good training accuracy but poor validation accuracy.
+* How was the architecture adjusted and why was it adjusted? Introduced regularization, validation accuracy increased to some 80% (from some 60% previously). 
+*I used both L2-regularisation and dropout (details above). 
 * Main improvement: Changing to greyscale Images. Validation accuracy reached values around 96%. I do not have a theoretical justification, I tried it since it was suggested by udacity and it worked. 
 * Which parameters were tuned? I tuned both the learning rate and the weight for regularization. Dropout prob 50% worked find.  
 * What are some of the important design choices and why were they chosen? The leNet architecture was a good choice, quite capable of describing the data without overfitting, provided proper regularisation is implemented.
@@ -188,19 +188,6 @@ Here are nine German traffic signs that I found on the web, or photographed myse
    <img width="200" src="././verkehrszeichen/3p5m.jpg">
 </p>
 
-<!--
-[image4]:  "Traffic Sign 1"
-[image5]: ./verkehrszeichen/.jpg "Traffic Sign 2"
-[image6]: ./verkehrszeichen/.jpg "Traffic Sign 3"
-[image7]: ./verkehrszeichen/.jpg "Traffic Sign 4"
-[image8]: ./verkehrszeichen/.jpg "Traffic Sign 5"
-[image9]: ./verkehrszeichen/.jpg "Traffic Sign 6"
-[image10]: ./verkehrszeichen/.jpg "Traffic Sign 7"
-[image11]: ./verkehrszeichen/.jpg "Traffic Sign 8"
-[image12]: ./verkehrszeichen/.jpg "Traffic Sign 9"
->
- 
-<! -- ![alt text][image4] ![alt text][image5] ![alt text][image6] ![alt text][image7] ![alt text][image8] ![alt text][image9] ![alt text][image10] [alt text][image11] ![alt text][image12]  >
 
 The first image might be difficult to classify because ...
 
