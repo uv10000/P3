@@ -37,9 +37,9 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 ### Executive Summary
 
 
-As a starting If an iterative approach was chosen:point, I used my leNet implementation from the lecture/quizz, as suggested. 
+As a starting point, I used my leNet implementation from the lecture/quizz, as suggested. 
 
-It did not work out of the box, and I observed severe overfitting. Symptoms: Near 100% accuracy on the training set but far less (~ 60%, initially) on the validation set. 
+This initial implementation did not work well out of the box, and I observed severe overfitting. Symptoms: Near 100% accuracy on the training set but far less (~ 60%, initially) on the validation set. 
 
 I then came up with two major improvements:
 * Regularisation (both L_2 and dropout, details see below). Still overfitting but better (80% training accuracy). 
@@ -49,15 +49,22 @@ After some tuning (all details see below) I acchieved 96% accuracy on the valida
 
 The solution found also performs well on the test set (some 95%).
 
-However it badly fails on the real world test images of German traffic signs (55% accuracy on 9 images).
-
 I did not have to use any form of data augmentation to get this relatively pleasing result. 
+
+However, the implementation at that stage performed poorly on my real world test images of German traffic signs (55% accuracy on 9 images, moreover near 100% softmax probabilities on the wrong indices, i.e. false positive detection).
+
+Thereafter I decided to augment/pad the dataset such that every class was represented at least 1000 times, by simply appending the respective classes of initally underrepresented images sufficiently often to the training set. 
+
+I did not apply any (random) distortions to the dataset itself, but decided to apply such distortions (random noise, random rotations) in TF at-run-time/on-the-fly, using functions like tf.contrib.image.rotate.
+
+This preserved but did not substantially increase training and validations accuracies. However, the real world data were handled better, in that more pictures were correctly classified, plus softmax probabilities appear to be only close to 100% iff the image is correctly classified (ok, I was looking at only 9 images ...), and bounded away from a zero entropy distribution otherwise.  
 
 See detailed report and discussions below. 
 
-Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
+Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Tr
+affic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
 
-I worked in a local setup using my GTX 1070 under Ubuntu 16.04 employing the GPU Version of the udacity carnd-term1 conda environment.
+I worked in a local setup using my GTX 1070 under Ubuntu 16.04 employing the GPU Version of the udacity carnd-term1 conda environment, Tensorflow 1.3 (did not dare to update after discovering this outdated version number).
 
 ### Data Set Summary & Exploration
 
