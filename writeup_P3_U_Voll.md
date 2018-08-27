@@ -79,7 +79,7 @@ signs data set:
 * The size of the validation set is 4410 (using .shape) 
 * The size of test set is 12630 (using .shape) 
 * The shape of a traffic sign image is (32, 32) (using .shape) 
-* The number of unique classes/labels in the data set is 43 (using np.max on the y-values)
+* The number of unique classes/labels in the data set is 43 (using np.max on the y-values)     
 
  After augmentation/padding (see below) we have 64468 images in the training set. 
 
@@ -115,7 +115,7 @@ Here is an example of a traffic sign image before and after my grayscaling, usin
 
 1 
 Only in the end I decided to apply padding/augmentation.
-
+     
 ```python
 ny=np.zeros(n_classes)
     for cl  in range(n_classes):
@@ -282,26 +282,40 @@ Here are the results of the predictions on the first 8 real world image (the 9th
 |                       |               |     |                    |
 | not in list (max height 3.5m)|  9    no passing | n.a.         | 93%|
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 8 traffic signs, which gives an accuracy of 62.5%. 
+
+This is worse than training/validation/test accuracies. 
+
+I have no clear understanding why, but it may have to to with the preprocessing of the images in the German Traffic Sign Database vs. my own "real world" images. Or is it a sign of overtraining somehow?
+
+At least, as was the case before introducing data augmentation, the softmax probabilites do not signal absolute certainty when predicting the wrong sign. With the exception of taking 4 for 9 with a certainty of 98%. 
+
+This might be used to identify "high trust" outputs against "not so sure" outputs. 
+
+However looking at 8 images only this is not statistically significant and deserves further investigation. 
+
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Sugge stions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
+See above. 
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+
+I got outputFeatureMap() working after having some technical details with the visibility of TF-Variables.
+
+Here comes the layer ap1 (first pooling layer) upon activation with the stop sign. 
+
+<p align="center">
+  <img width="500" src="./stop_for_introspection.png">
+</p>
+
+
+<p align="center">
+  <img width="500" src="./introspection_ap1.png">
+</p>
+
+Frankly speaking I do not see a clear pattern of "what the net finds important". 
+
 
 
