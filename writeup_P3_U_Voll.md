@@ -182,29 +182,55 @@ To train the model, I used
 * biases initialised with 0.0s
 * RELU as non-linearity
 * learned parameters are stored to disk using the tl.saver mechanism  
+* randomisation see code snippet right below (random translations omitted due to old TF 1.3 on my machine)
+```
+# apply random rotations "on the fly", i.e. on-line
+anglevector=tf.random_normal(
+    [batch_size],
+    mean=0.0,
+    stddev=3.0 *3.14/180) # +/- 3° noise
+x=tf.contrib.image.rotate(x,anglevector) #rotate x by random vactors
+# end of random rotations
+# add random noise  "on the fly", i.e. on-line
+noise=tf.random_normal(
+    tf.shape(x),
+    mean=0.0,
+    stddev=0.1) # range of pixel values is approx [-1,1]
+x=x+noise
+# end of add random noise
+### # the following is omitted due to TF v1.3 on my machine not supporting tf.contrib.image.translate
+#### add random translations  "on the fly", i.e. on-line
+###translations=tf.random_normal(
+###    [batch_size,im_size,im_size],
+###    mean=0.0,
+###    stddev=3) # translate +/- 3 pixel-widths
+###x=tf.contrib.image.translate(x,translations)
+####translations: A vector representi```ng [dx, dy] or (if images has rank 4) a matrix of length num_images,
+####with a [dx, dy] vector for each image in the batch.
+#### end of add translations
+```
+
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of 99.8%
-* validation set accuracy of 96.3% 
-* test set accuracy of 94.7%
+* training set accuracy of 99.9%
+* validation set accuracy of 96.4% 
+* test set accuracy of 95.0%
 
 * I started off with the architecture from the leNet class/quizz (initially adapted to three colour channels, later returned to greyscale). 
-* Problems with the initial architecture: Severe overfitting, that is: very good training accuracy but poor validation accuracy.
+* Problems with the initial architecture: Severe overfitting, that is very good training accuracy but poor validation accuracy.
 * How was the architecture adjusted and why was it adjusted? Introduced regularization, validation accuracy increased to some 80% (from some 60% previously). 
 *I used both L2-regularisation and dropout (details above). 
 * Main improvement: Changing to greyscale Images. Validation accuracy reached values around 96%. I do not have a theoretical justification, I tried it since it was suggested by udacity and it worked. 
 * Which parameters were tuned? I tuned both the learning rate and the weight for regularization. Dropout prob 50% worked fine.  
 * What are some of the important design choices and why were they chosen? The leNet architecture was a good choice, quite capable of describing the data without overfitting, provided proper regularisation is implemented.
-
-
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well? Training accuracy close to one and still high validation accuracy. 
- 
+* I was unhappy with the way the real world images were handled and I decided to include data augmentation only in the very end, see below. 
 
 ### Test a Model on New Images 
 
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### 1. Choose some German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
 Here are nine German traffic signs that I found on the web, or photographed myself (since I live in Munich ...):
 
@@ -230,7 +256,7 @@ Here are nine German traffic signs that I found on the web, or photographed myse
 
 All images are nicely centred and cropped.
 
-The last image is a German traffic sign but not in the list (max height 3.5m).
+The last image is "off the record", it is a German traffic sign but not in the list (max height 3.5m).
 
 Here are the same images converted to 32x32 greyscale
 <p align="center">
@@ -239,16 +265,20 @@ Here are the same images converted to 32x32 greyscale
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
-Here are the results of the prediction:
+Here are the results of the predictions on the first 8 real world image (the 9th is a sign not in the list ...):
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
-
+| Image			        |     Prediction  				| softmax-probability
+|:--------------------:|:--------------:|:------------------:| 
+| 1 30 km/h            	| 9             | 84%                |
+| 38       			          | 38 										 | 99%                |
+| 14					               | 14											 | 100%               |
+| 5                     | 11     							| 72%                |
+| 9			                  | 4      							| 98%                |
+| 17			                 | 17     							| 100%               |
+| 13			                 | 13     							| 100%               |
+| 12		                  | 12     							| 100%               |
+|:--------------------:|:--------------:|:------------------:| 
+| not in list (max height 3.5m)         | 9             | 93%|
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
