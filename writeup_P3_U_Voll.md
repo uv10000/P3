@@ -43,21 +43,23 @@ This initial implementation did not work well out of the box, and I observed sev
 
 I then came up with two major improvements:
 * Regularisation (both L_2 and dropout, details see below). Still overfitting but better (80% training accuracy). 
-* Conversion to greyscale. Surprisingly (to me), this massively improved the validation-set-accuracy beyond the limit of 93%. 
+* Conversion to greyscale, following your hints. Surprisingly (to me), this massively improved the validation-set-accuracy well beyond the limit of 93%.
 
-After some tuning (all details see below) I acchieved 96% accuracy on the validation set.
+More specifically, after some tuning (all details see below) I acchieved 96% accuracy on the validation set.
 
 The solution found also performs well on the test set (some 95%).
 
 I did not have to use any form of data augmentation to get this relatively pleasing result. 
 
-However, the implementation at that stage performed poorly on my real world test images of German traffic signs (55% accuracy on 9 images, moreover near 100% softmax probabilities on the wrong indices, i.e. false positive detection).
+However, the implementation at that stage performed unsatisfactory on my real world test images of German traffic signs (55% accuracy on 9 images, moreover near 100% softmax probabilities on the wrong indices, i.e. false positive detection).
 
-Thereafter I decided to augment/pad the dataset such that every class was represented at least 1000 times, by simply appending the respective classes of initally underrepresented images sufficiently often to the training set. 
+Thereafter I decided to augment/pad the training dataset such that every class was represented at least 1000 times, by simply appending the respective classes of initally underrepresented images sufficiently often to the training set. 
 
 I did not apply any (random) distortions to the dataset itself, but decided to apply such distortions (random noise, random rotations) in TF at-run-time/on-the-fly, using functions like tf.contrib.image.rotate.
 
 This preserved but did not substantially increase training and validations accuracies. However, the real world data were handled better, in that more pictures were correctly classified, plus softmax probabilities appear to be only close to 100% iff the image is correctly classified (ok, I was looking at only 9 images ...), and bounded away from a zero entropy distribution otherwise.  
+
+I also played around with your function outputFeatureMap() for introspection into the network. 
 
 See detailed report and discussions below. 
 
@@ -79,6 +81,8 @@ signs data set:
 * The shape of a traffic sign image is (32, 32) (using .shape) 
 * The number of unique classes/labels in the data set is 43 (using np.max on the y-values)
 
+ After augmentation/padding (see below) we have 64468 images in the training set. 
+
 #### 2. Include an exploratory visualization of the dataset.
 
 Here are three bar charts showing the (absolute) frequencies of the data as a function  of label,  for all three sets, ie training, validation and test set.
@@ -87,9 +91,17 @@ Here are three bar charts showing the (absolute) frequencies of the data as a fu
   <img width="500" src="./data_statistics.png">
 </p>
 
-Classes are indeed distributed quite unevenly and data augmentation might be worth a try.  
-If an iterative approach was chosen:
-The distribution seems to be fairly similar for training validation and test set. 
+The distribution seems to be fairly similar for training validation and test set, which is a good thing (at least valildation and test set should follow the same distribution). 
+
+Classes are indeed distributed quite unevenly and data augmentation as suggested might well be worth a try.  
+
+Here comes the same for the "padded" version where each class is represented by at least 1000 images (simply repeated copies of the existing images, to be randomized on-the-fly only later in TF) 
+<p align="center">
+  <img width="500" src="./data_statistics.png">
+</p>
+
+In the .ipynb this "padding" can be turned on optionally.
+
 
 ### Design and Test a Model Architecture
 
