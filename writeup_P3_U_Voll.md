@@ -75,7 +75,7 @@ I worked in a local setup using my GTX 1070 under Ubuntu 16.04 employing the GPU
 I used numpy/python to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is 34799 (using .shape) 
+* The size of training set is 34799 (using .shape) 1 
 * The size of the validation set is 4410 (using .shape) 
 * The size of test set is 12630 (using .shape) 
 * The shape of a traffic sign image is (32, 32) (using .shape) 
@@ -113,7 +113,7 @@ Here is an example of a traffic sign image before and after my grayscaling, usin
 
 ![alt text][image2]
 
-
+1 
 Only in the end I decided to apply padding/augmentation.
 
 ```python
@@ -138,7 +138,7 @@ Here come the histograms for the "padded" version where each class is represente
 <p align="center">
   <img width="500" src="./data_statistics_padded.png">
 </p>
-
+1 
 
 
 
@@ -277,8 +277,10 @@ Here are the results of the predictions on the first 8 real world image (the 9th
 | 17 No entry           | 17     							| T   | 100%               |
 | 13	Yield              | 13     							| T   | 100%               |
 | 12	Stop	              | 12     							| T   | 100%               |
-
-| not in list (max height 3.5m)         | n.a.| 9             | 93%|
+|                       |               |     |                    |
+|                       |               |62.5%|                    |
+|                       |               |     |                    |
+| not in list (max height 3.5m)|  9    no passing | n.a.         | 93%|
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
