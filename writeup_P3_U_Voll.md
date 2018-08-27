@@ -95,19 +95,15 @@ The distribution seems to be fairly similar for training validation and test set
 
 Classes are indeed distributed quite unevenly and data augmentation as suggested might well be worth a try.  
 
-Here comes the same for the "padded" version where each class is represented by at least 1000 images (simply repeated copies of the existing images, to be randomized on-the-fly only later in TF) 
-<p align="center">
-  <img width="500" src="./data_statistics.png">
-</p>
 
-In the .ipynb this "padding" can be turned on optionally.
+In the .ipynb this "padding" can be turned on optionally. See below for details on padding. 
 
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-Initially, I merely normalized the image data according to your suggestion. The approximate formula (pixel - 128)/ 128 is indeed good enough. 
+Initially, I merely normalized the (RGB-)image data according to your suggestion. The approximate formula (pixel - 128)/ 128 is indeed good enough. 
 
 Only later, after getting stuck in an overfitting situation with the colour-images,  I decided to convert the images to grayscale because Udacity suggested it. This turned out to help a lot, but I am not sure why, see discussion below. 
 
@@ -118,8 +114,32 @@ Here is an example of a traffic sign image before and after my grayscaling, usin
 ![alt text][image2]
 
 
-I did not need to generate any additional data in order to acchieve (substantially) more than 93% accuracy on the training set. 
-So I did not try. Possibly I will come around to augmenting data at later stage, it would certainly be interesting how much of an effect this might have.  
+Only in the end I decided to apply padding/augmentation.
+
+```python
+ny=np.zeros(n_classes)
+    for cl  in range(n_classes):
+        ny[cl] = np.sum(y_train==cl)
+        while ny[cl] <1000:
+            indexset=(y_train==cl)
+            #print(indexset)
+            #X_new=X_train[indexset,:,:,:]
+            #print(X_new.shape)
+            X_train = np.concatenate([X_train,X_train[indexset,:,:,:]],axis=0)
+            y_train = np.concatenate([y_train,y_train[indexset]],axis=0)
+            ny[cl] = np.sum(y_train==cl)   
+    print(ny)
+```
+
+After augmentation/padding we have 64468 images in the training set. 
+
+
+Here come the histograms for the "padded" version where each class is represented by at least 1000 images (simply repeated copies of the existing images, to be randomized on-the-fly only later in TF) 
+<p align="center">
+  <img width="500" src="./data_statistics_padded.png">
+</p>
+
+
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
