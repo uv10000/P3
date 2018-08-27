@@ -267,18 +267,18 @@ Here are the same images converted to 32x32 greyscale
 
 Here are the results of the predictions on the first 8 real world image (the 9th is a sign not in the list ...):
 
-| Image			        |     Prediction  				| softmax-probability
-|:--------------------:|:--------------:|:------------------:| 
-| 1 30 km/h            	| 9             | 84%                |
-| 38       			          | 38 										 | 99%                |
-| 14					               | 14											 | 100%               |
-| 5                     | 11     							| 72%                |
-| 9			                  | 4      							| 98%                |
-| 17			                 | 17     							| 100%               |
-| 13			                 | 13     							| 100%               |
-| 12		                  | 12     							| 100%               |
-|:--------------------:|:--------------:|:------------------:| 
-| not in list (max height 3.5m)         | 9             | 93%|
+| Image			        |     Prediction  				| T/F |softmax-probability
+|:--------------------:|:--------------:|:----|:------------------:| 
+| 1 30 km/h            	| 9 no passing  | F   | 84%                |
+| 38  Keep right        | 38 	 								 | T   | 99%                |
+| 14	 Stop              | 14											 | T   | 100%               |
+| 4 70 km/h             | 11 Right-of-way| F   | 72%                |
+| 9	No passing          | 4 70 km/						| F   | 98%                |
+| 17 No entry           | 17     							| T   | 100%               |
+| 13	Yield              | 13     							| T   | 100%               |
+| 12	Stop	              | 12     							| T   | 100%               |
+
+| not in list (max height 3.5m)         | n.a.| 9             | 93%|
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
