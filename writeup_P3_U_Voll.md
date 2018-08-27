@@ -294,6 +294,12 @@ This might be used to identify "high trust" outputs against "not so sure" output
 
 However looking at 8 images only this is not statistically significant and deserves further investigation. 
 
+Remark 1: The 32x32 grid is fairly coarse. It is hard to imagine that pictures other than perfectly zoomed in on, centred and cropped could be recocnized at all. So the robustness against translations of the NN does not really have a chance to come into play.
+
+Remark 2: Concerning the translation invariance in itself. Most objects we are interested in are intrinsically three-dimensional in nature. The relevant symmetry group should be, in my eyes, not translations in two-space but the full affine group (rotations and translations) in 3-space. I vaguely heard about G. Hinton's concept of "capsules" which appears to address the issue. 
+
+Remark 3: Even if the algorithm was perfectly capable of identifying arbitrary translations of signs in the images, I am quite sure it would have a hard time in the presence of more than one sign in the image, which does occur quite often in practice.
+
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Sugge stions" part of the rubric, visualizations can also be provided such as bar charts)
 
@@ -303,6 +309,11 @@ See above.
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
 I got outputFeatureMap() working after having some technical details with the visibility of TF-Variables.
+
+My description and interpretation of those problems is the following: 
+In the function LeNet() certain layers like e.g. ap1 of the TF-computation-graph are defined. Clearly they must be stored persistently somewhere, in order to be available when the TF session is execute. However they seem to have been hidden to the "saver". I believe this is because the python variabel "ap1" (a reference?!) is a local variable of LeNet(). My fix was to return all variables like ap1 from LeNet(), such they were visible on the level where "saver" was trying to find them. 
+
+Still I am confused about this technical issue, all comments welcome. 
 
 Here comes the layer ap1 (first pooling layer) upon activation with the stop sign. 
 
