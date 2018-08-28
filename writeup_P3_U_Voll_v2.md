@@ -33,6 +33,68 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 [image12]: ./verkehrszeichen/3p5m.jpg "Traffic Sign 9"
 
 
+### Supplements for 2nd Submission
+
+Thanks to reviewer 1 for the many hints. 
+
+Please find my adapted .ipynb  [here](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier_v2.ipynb)
+(all relevant file have the suffix "v_2").
+
+ I switched to using np.unique, as it may be more robust than taking just np.max(y) in case the labels are non-contiguous.
+ 
+ Updated the frequency plots with narrower bars
+ <p align="center">
+  <img width="500" src="./data_statistics_nicer.png">
+</p>
+Note however (that irrespective of the bar-width) there is no class with less than 1000 images, due to data augmentation which was already present and discussed in the first submission. 
+
+I provided learning curves as follows
+ <p align="center">
+  <img width="500" src="./learning_curves.png">
+</p>
+Is this the correct way of plotting them? The learning accuracy approaches 100% whereas the validations accuracy does not substantially get above 96%. This is the same behaviour as in the first submission, despite of my using histogram equalization here. 
+
+As suggested by reviewer 1 I added  histogram equalization to my image preprocessing (both for the training set and for the real world images). Cf the following code snippet (this is the part for the real world images): 
+```
+def preprocess(filepath):
+    img = cv2.imread(filepath)
+    img_small= cv2.resize(img, (32,32))
+
+    img_small_g = np.zeros((32,32,1))
+    img_small_g[:,:,0]=cv2.cvtColor(img_small, cv2.COLOR_BGR2GRAY)
+    
+    img_small_hg = np.zeros((32,32,1))
+    img_small_hg[:,:,0]=cv2.equalizeHist(img_small_g[:,:,0] .astype(np.uint8))
+    
+    img_small_hg= (img_small_hg.astype(np.float32) -128)/128
+
+    plt.figure(figsize=(1,1))
+    plt.imshow(img_small_hg[:,:,0], cmap="gray")
+    return img_small_hg
+
+```
+Using histogram equalization definitely improves contrast of the images. Unfortunately, histogram equalization had no apparent effect on the accuracies.
+
+Getting to reviewer 1's suggestion to augment the data such that no class was represented by less than 1000 images: This is exactly what I did in the code of my original submission. 
+```
+data_augmentation_padding_flag = True
+print("data augmentation/padding is turned on: " + str(data_augmentation_padding_flag))
+
+#optionally: append underrepresented classes (randomisation will occur lateron)
+if data_augmentation_padding_flag:
+    ny=np.zeros(n_classes)
+    for cl  in range(n_classes):
+        ny[cl] = np.sum(y_train==cl)
+        while ny[cl] <1000:
+            indexset=(y_train==cl)
+            X_train = np.concatenate([X_train,X_train[indexset,:,:,:]],axis=0)
+            y_train = np.concatenate([y_train,y_train[indexset]],axis=0)
+            ny[cl] = np.sum(y_train==cl)   
+    print(ny)
+```
+
+
+
 
 ### Executive Summary
 
@@ -63,8 +125,7 @@ I also played around with your function outputFeatureMap() for introspection int
 
 See detailed report and discussions below. 
 
-Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Tr
-affic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
+Here is a link to my [project code](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier.ipynb), next to it in the github-repo P3 there is a .html export of the .jpynb showing the simulation results, alongside with this writeup-file. 
 
 I worked in a local setup using my GTX 1070 under Ubuntu 16.04 employing the GPU Version of the udacity carnd-term1 conda environment, Tensorflow 1.3 (did not dare to update after discovering this outdated version number).
 
