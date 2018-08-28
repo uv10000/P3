@@ -48,11 +48,14 @@ Please find my adapted .ipynb  [here](https://github.com/uv10000/P3/blob/master/
 </p>
 Note however that (irrespective of the bar-width) there is no class with less than 1000 images, due to data augmentation (which was already present and discussed in the first submission, see below). 
 
+
 3 I provided learning curves as follows
  <p align="center">
-  <img width="500" src="./learning_curves.png">
+  <img width="900" src="./learning_curves.png">
 </p>
-Is this the correct way of plotting them? The learning accuracy approaches 100% whereas the validations accuracy does not substantially get above 96%. This is the same behaviour as in the first submission, despite of my using histogram equalization as suggested in the second submission. 
+ *I would like to see a learning curve on your final model to understand at which epoch your validation accuracy gets flat and understand if there is room for achieving higher validation accuracy.*
+ 
+Would this actually help you understand if there is room for improvement, as suggested by reviewer 1? The learning accuracy approaches 100% whereas the validations accuracy does not substantially get above 96%. This is the same behaviour as in the first submission, despite of my using histogram equalization as suggested in the second submission. 
 
 4 As suggested by reviewer 1 I added  histogram equalization to my image preprocessing (both for the training set and for the real world images). Cf the following code snippet (this is the part for the real world images): 
 ```
@@ -94,6 +97,7 @@ if data_augmentation_padding_flag:
 ```
 As discussed in the (first) project writeup, I merely appended images from the under-represented classes sufficiently often to the training set, relying on the reshuffling followed by my "on the fly random perturbations", cf. codesnippet included in the first writeup (using x=tf.contrib.image.rotate(x,anglevector) and the like) see below. 
 
+6 Concluding remarks:
 
 What do you think I could do to further improve training accuracy? Possibly I overdid it with regularisation ... 
 
