@@ -38,21 +38,21 @@ cf. [rubric points](https://review.udacity.com/#!/rubrics/481/view)
 Thanks to reviewer 1 for the many hints. 
 
 Please find my adapted .ipynb  [here](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier_v2.ipynb)
-(all relevant file have the suffix "v_2").
+(all relevant files for 2nd submission have the suffix "_v2").
 
  1 I switched to using np.unique, as it may be more robust than taking just np.max(y) in case the labels are non-contiguous.
  
- 2 Updated the frequency plots with narrower bars
+ 2 I updated the frequency plots with narrower bars
  <p align="center">
   <img width="500" src="./data_statistics_nicer.png">
 </p>
-Note however (that irrespective of the bar-width) there is no class with less than 1000 images, due to data augmentation which was already present and discussed in the first submission. 
+Note however that (irrespective of the bar-width) there is no class with less than 1000 images, due to data augmentation (which was already present and discussed in the first submission, see below). 
 
 3 I provided learning curves as follows
  <p align="center">
   <img width="500" src="./learning_curves.png">
 </p>
-Is this the correct way of plotting them? The learning accuracy approaches 100% whereas the validations accuracy does not substantially get above 96%. This is the same behaviour as in the first submission, despite of my using histogram equalization here. 
+Is this the correct way of plotting them? The learning accuracy approaches 100% whereas the validations accuracy does not substantially get above 96%. This is the same behaviour as in the first submission, despite of my using histogram equalization as suggested in the second submission. 
 
 4 As suggested by reviewer 1 I added  histogram equalization to my image preprocessing (both for the training set and for the real world images). Cf the following code snippet (this is the part for the real world images): 
 ```
