@@ -40,21 +40,21 @@ Thanks to reviewer 1 for the many hints.
 Please find my adapted .ipynb  [here](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier_v2.ipynb)
 (all relevant file have the suffix "v_2").
 
- I switched to using np.unique, as it may be more robust than taking just np.max(y) in case the labels are non-contiguous.
+ 1 I switched to using np.unique, as it may be more robust than taking just np.max(y) in case the labels are non-contiguous.
  
- Updated the frequency plots with narrower bars
+ 2 Updated the frequency plots with narrower bars
  <p align="center">
   <img width="500" src="./data_statistics_nicer.png">
 </p>
 Note however (that irrespective of the bar-width) there is no class with less than 1000 images, due to data augmentation which was already present and discussed in the first submission. 
 
-I provided learning curves as follows
+3 I provided learning curves as follows
  <p align="center">
   <img width="500" src="./learning_curves.png">
 </p>
 Is this the correct way of plotting them? The learning accuracy approaches 100% whereas the validations accuracy does not substantially get above 96%. This is the same behaviour as in the first submission, despite of my using histogram equalization here. 
 
-As suggested by reviewer 1 I added  histogram equalization to my image preprocessing (both for the training set and for the real world images). Cf the following code snippet (this is the part for the real world images): 
+4 As suggested by reviewer 1 I added  histogram equalization to my image preprocessing (both for the training set and for the real world images). Cf the following code snippet (this is the part for the real world images): 
 ```
 def preprocess(filepath):
     img = cv2.imread(filepath)
@@ -75,7 +75,7 @@ def preprocess(filepath):
 ```
 Using histogram equalization definitely improves contrast of the images. Unfortunately, histogram equalization had no apparent effect on the accuracies.
 
-Getting to reviewer 1's suggestion to augment the data such that no class was represented by less than 1000 images: This is exactly what I did in the code of my original submission. 
+5 Concerning reviewer 1's suggestion to augment the data such that no class was represented by less than 1000 images, I am slightly confused. Isn't this is exactly what I did in the code of my original submission?  Maybe I did not make this sufficiently clear. Cf. the following code snippet: 
 ```
 data_augmentation_padding_flag = True
 print("data augmentation/padding is turned on: " + str(data_augmentation_padding_flag))
@@ -92,7 +92,14 @@ if data_augmentation_padding_flag:
             ny[cl] = np.sum(y_train==cl)   
     print(ny)
 ```
+As discussed in the (first) project writeup, I merely appended images from the under-represented classes sufficiently often to the training set, relying on the reshuffling followed by my "on the fly random perturbations", cf. codesnippet included in the first writeup (using x=tf.contrib.image.rotate(x,anglevector) and the like) see below. 
 
+
+What do you think I could do to further improve training accuracy? Possibly I overdid it with regularisation ... 
+
+All comments welcome.
+
+Thank you for reviewing!
 
 
 
