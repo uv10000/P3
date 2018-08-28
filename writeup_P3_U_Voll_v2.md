@@ -40,24 +40,24 @@ Thanks to reviewer 1 for the many hints.
 Please find my adapted .ipynb  [here](https://github.com/uv10000/P3/blob/master/Traffic_Sign_Classifier_v2.ipynb)
 (all relevant files for 2nd submission have the suffix "_v2").
 
- 1 I switched to using np.unique, as it may be more robust than taking just np.max(y) in case the labels are non-contiguous.
+ 1. I switched to using np.unique, as it may be more robust than taking just np.max(y) in case the labels are non-contiguous.
  
- 2 I updated the frequency plots with narrower bars
+ 2. I updated the frequency plots with narrower bars
  <p align="center">
   <img width="500" src="./data_statistics_nicer.png">
 </p>
 Note however that (irrespective of the bar-width) there is no class with less than 1000 images, due to data augmentation (which was already present and discussed in the first submission, see below). 
 
 
-3 I provided learning curves as follows
+3. I provided learning curves as follows
  <p align="center">
   <img width="900" src="./learning_curves.png">
 </p>
- *I would like to see a learning curve on your final model to understand at which epoch your validation accuracy gets flat and understand if there is room for achieving higher validation accuracy.*
+ __I would like to see a learning curve on your final model to understand at which epoch your validation accuracy gets flat and understand if there is room for achieving higher validation accuracy.__
  
 Would this actually help you understand if there is room for improvement, as suggested by reviewer 1? The learning accuracy approaches 100% whereas the validations accuracy does not substantially get above 96%. This is the same behaviour as in the first submission, despite of my using histogram equalization as suggested in the second submission. 
 
-4 As suggested by reviewer 1 I added  histogram equalization to my image preprocessing (both for the training set and for the real world images). Cf the following code snippet (this is the part for the real world images): 
+4. As suggested by reviewer 1 I added  histogram equalization to my image preprocessing (both for the training set and for the real world images). Cf the following code snippet (this is the part for the real world images): 
 ```
 def preprocess(filepath):
     img = cv2.imread(filepath)
@@ -78,7 +78,7 @@ def preprocess(filepath):
 ```
 Using histogram equalization definitely improves contrast of the images. Unfortunately, histogram equalization had no apparent effect on the accuracies.
 
-5 Concerning reviewer 1's suggestion to augment the data such that no class was represented by less than 1000 images, I am slightly confused. Isn't this is exactly what I did in the code of my original submission?  Maybe I did not make this sufficiently clear. Cf. the following code snippet: 
+5. Concerning reviewer 1's suggestion to augment the data such that no class was represented by less than 1000 images, I am slightly confused. Isn't this is exactly what I did in the code of my original submission?  Maybe I did not make this sufficiently clear. Cf. the following code snippet: 
 ```
 data_augmentation_padding_flag = True
 print("data augmentation/padding is turned on: " + str(data_augmentation_padding_flag))
@@ -97,9 +97,14 @@ if data_augmentation_padding_flag:
 ```
 As discussed in the (first) project writeup, I merely appended images from the under-represented classes sufficiently often to the training set, relying on the reshuffling followed by my "on the fly random perturbations", cf. codesnippet included in the first writeup (using x=tf.contrib.image.rotate(x,anglevector) and the like) see below. 
 
-6 Concluding remarks:
+6. Concluding remarks:
+
+Is there anything wrong with the data augmentation I provided in the first submission (randomization happening in TF at run-time ...)? Or have you merely overlook the fact that it was already present?
 
 What do you think I could do to further improve training accuracy? Possibly I overdid it with regularisation ... 
+Possibly I could come up with a better set of hyper-parameters  ... however I have to have an eye on my time budget. 
+
+Can you explain why switching to greyscale made such big impact for validation accuracy?
 
 All comments welcome.
 
